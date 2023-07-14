@@ -10,6 +10,7 @@ class Solution {
         //Separates 1's and 0's into two arrays
         ArrayList<Integer> countOnes = new ArrayList<>();
         ArrayList<Integer> countZeroes = new ArrayList<>();
+
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == 1) {
                 countOnes.add(i);
@@ -18,11 +19,57 @@ class Solution {
             }
         }
 
-        //Make countOne and countZero same size array
-        int excess = Math.max(countZeroes.size(), countOnes.size()) - Math.min(countZeroes.size(), countOnes.size());
-        ArrayList<ArrayList<Integer>> allPossibleCuts = new ArrayList<>(excess + 1);
+        int cutSize = Math.min(countZeroes.size(), countOnes.size());
+        boolean isContiguous = false;
 
-        if (countZeroes.size() < countOnes.size()) {
+        while (isContiguous == false) {
+            //this calls functions inside
+
+            cutSize = cutSize - 1;
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> cut(ArrayList<Integer> cutThis, int cutSize) {
+        //creates all cuts of cutThis of size cutSize
+        ArrayList<ArrayList<Integer>> allPossibleCuts = new ArrayList<>();
+        int excess = cutThis.size() - cutSize;
+        for (int i = 0; i < excess + 1; i++) {
+            allPossibleCuts.add(new ArrayList<>(cutThis.subList(i, (cutSize + i))));
+        }
+        return allPossibleCuts;
+    }
+
+    public boolean isContiguous(ArrayList<ArrayList<Integer>> allPossible1, ArrayList<ArrayList<Integer>> allPossible2) {
+        ArrayList<ArrayList<Integer>> mergedIndices = new ArrayList<>();
+
+        for (int i = 0; i < allPossible1.size(); i++) {
+            for (int j = 0; j < allPossible2.size(); j++) {
+                //merge ith of 1 and jth of 2 into  mergedIndices
+                ArrayList<Integer> temp = new ArrayList<>();
+                temp.addAll(allPossible1.get(i));
+                temp.addAll(allPossible2.get(j));
+                Collections.sort(temp);
+                mergedIndices.add(temp);
+
+                //check if ijth entry of mergedIndices is connected
+                for (int k = 0; k <= temp.size() - 2; k++) {
+                    if ((temp.get(k + 1)) - temp.get(k) != 1) {
+                        break;
+                    }
+                    if (k == temp.size() - 2) {
+                        return true;
+                    }
+                }
+
+            }
+        }
+        return false;
+
+    }
+}
+
+
+      /*  if (countZeroes.size() < countOnes.size()) {
             //Creates an array of arrays of all possible cuts of countOnes
             for (int i = 0; i < excess + 1; i++) {
                 //Step i=0: 0 -> countOnes.Size()-excess; Step i: shifts initial array to the right by i
@@ -40,9 +87,7 @@ class Solution {
         } else if (countZeroes.size() == countOnes.size()) {
             //we are done. return nums.length()
         }
-    }
-
-    public
+    }*/
 
         //JUNK//
 
