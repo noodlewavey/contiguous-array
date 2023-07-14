@@ -20,12 +20,17 @@ class Solution {
         }
 
         int cutSize = Math.min(countZeroes.size(), countOnes.size());
-        boolean isContiguous = false;
+        boolean isConnected = false;
 
-        while (isContiguous == false) {
-            //this calls functions inside
-
-            cutSize = cutSize - 1;
+        if (countZeroes.size()-countOnes.size()==0){
+            return nums.length;
+        }
+        else{
+            while (isConnected == false){
+                isConnected = isContiguous(cut(countOnes, cutSize), cut(countZeroes, cutSize));
+                cutSize = cutSize - 1;
+            }
+            return 2*cutSize;
         }
     }
 
@@ -60,16 +65,16 @@ class Solution {
                         return true;
                     }
                 }
-
             }
         }
         return false;
+
 
     }
 }
 
 
-      /*  if (countZeroes.size() < countOnes.size()) {
+/*  if (countZeroes.size() < countOnes.size()) {
             //Creates an array of arrays of all possible cuts of countOnes
             for (int i = 0; i < excess + 1; i++) {
                 //Step i=0: 0 -> countOnes.Size()-excess; Step i: shifts initial array to the right by i
