@@ -1,8 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Collections;
-import java.util.Arrays;
 
 class Solution {
 
@@ -19,18 +17,25 @@ class Solution {
             }
         }
 
+        if (countOnes.size() == 0 || countZeroes.size() == 0){
+            return 0;
+        }
+
         int cutSize = Math.min(countZeroes.size(), countOnes.size());
         boolean isConnected = false;
 
-        if (countZeroes.size()-countOnes.size()==0){
+        if (countZeroes.size() - countOnes.size() == 0) {
             return nums.length;
-        }
-        else{
-            while (isConnected == false){
+        } else {
+            while (isConnected == false) {
                 isConnected = isContiguous(cut(countOnes, cutSize), cut(countZeroes, cutSize));
-                cutSize = cutSize - 1;
+                if (isConnected == false) {
+                    cutSize = cutSize - 1;
+                } else {
+                    break;
+                }
             }
-            return 2*cutSize;
+            return 2 * cutSize;
         }
     }
 
@@ -71,7 +76,15 @@ class Solution {
 
 
     }
+
+    public static void main(String[] args){
+        Solution s = new Solution();
+        int[] nums = {0};
+        System.out.println(s.findMaxLength(nums));
+    }
+
 }
+
 
 
 /*  if (countZeroes.size() < countOnes.size()) {
@@ -94,9 +107,9 @@ class Solution {
         }
     }*/
 
-        //JUNK//
+//JUNK//
 
-        //Create an array of connected subarrays, and finds the longest one
+//Create an array of connected subarrays, and finds the longest one
        /* ArrayList<ArrayList<Integer>> connectedArrays = new ArrayList<>();
         for (int i=0; i<arrayPossible.size(); i++){
         ArrayList<Integer> temp = new ArrayList<>();
@@ -122,5 +135,4 @@ class Solution {
         }
 
         return longest;*/
-
 
